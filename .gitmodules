@@ -1,0 +1,3 @@
+[submodule "tiktoken"]
+	path = tiktoken
+	url = https://github.com/akuafo/tiktoken.git
