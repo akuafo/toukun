@@ -21,8 +21,7 @@ Table of contents:
 - <a href="#Logit-bias">Adding tokens to logit bias to influence chat completions
 - <a href="#More-resources">More resources
 
-![Screenshot of command line](https://github.com/akuafo/toukun/commandline.jpg?raw=true)
-
+![Screenshot of command line](https://github.com/akuafo/toukun/blob/main/commandline.jpg)
 
 ## <a id="Background"></a>Background
 
