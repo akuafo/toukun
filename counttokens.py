@@ -30,7 +30,7 @@ example_messages = [
 # print("  tiktoken token: " + str(t) + " | tiktoken string: " + encoding.decode([t]) + " | tiktoken byte literal: " + str(encoding.decode_bytes([t])))
 
 time.sleep(1)
-print("\nCount tokens in this example chat using", model, "model:\n", example_messages, "\n"); time.sleep(1)
+print("\nCount tokens using", model, "model for this example chat:\n", example_messages, "\n"); time.sleep(1)
 
 print("Looping through chat...\n"); time.sleep(1)
 def num_tokens_from_messages(messages):

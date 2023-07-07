@@ -2,12 +2,16 @@
 
 This is a work-in-progress walkthrough of the OpenAI tiktoken package including Python examples of text tokenization, viewing the internal dictionary, multi-byte unicode, logit bias, and more.  The scripts in this repository were created for learning and experimentation.
 
-Getting started:
-* clone this project
-* cd toukun
-* pip install . (this will install this project with openai's tiktoken as a submodule)
+Follow these steps to clone this project and install a copy of tiktoken as a submodule.
+- Clone the project: git clone https://github.com/akuafo/toukun.git
+- Navigate into the directory: cd toukun
+- Initialize and update submodules: git submodule update --init --recursive
+- Navigate into the tiktoken directory: cd tiktoken
+- Install tiktoken: pip install .
+- Navigate back to main directory: cd ..
+- Add your OpenAI developer key as an environment variable (Linux/Mac, export OPENAI_KEY=your_key.  Windows, set OPENAI_KEY=your_key)
 
-Table of Contents:
+Table of contents:
 - <a href="#Background">Brief background on tokenization
 - <a href="#OpenAI-models">Choosing the OpenAI models for tokenization
 - <a href="#Dicionary-files">Save the internal tiktoken dictionary as bytes and utf-8
@@ -16,6 +20,9 @@ Table of Contents:
 - <a href="#Counting-tokens">Tiktoken for counting tokens
 - <a href="#Logit-bias">Adding tokens to logit bias to influence chat completions
 - <a href="#More-resources">More resources
+
+![Screenshot of command line](https://github.com/akuafo/toukun/commandline.jpg?raw=true)
+
 
 ## <a id="Background"></a>Background
 
