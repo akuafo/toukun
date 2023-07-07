@@ -1,12 +1,11 @@
 # An exploration of OpenAI tokenization (tiktoken _educational and more)
 
-This is a walkthrough of the OpenAI tiktoken package including Python examples of text tokenization, viewing the internal dictionary, multi-byte unicode, logit bias, and more.  The scripts in this repository were created for learning and experimentation.
+This is a work-in-progress walkthrough of the OpenAI tiktoken package including Python examples of text tokenization, viewing the internal dictionary, multi-byte unicode, logit bias, and more.  The scripts in this repository were created for learning and experimentation.
 
 Getting started:
 * clone this project
 * cd toukun
 * pip install . (this will install this project with openai's tiktoken as a submodule)
-    editable package so you can change the source code
 
 Table of Contents:
 - <a href="#Background">Brief background on tokenization
@@ -15,7 +14,6 @@ Table of Contents:
 - <a href="#Text-to-token">Tiktoken's core text encoding and decoding functions
 - <a href="#Tiktoken-regex">The Tiktoken regex for initial splitting of text
 - <a href="#Counting-tokens">Tiktoken for counting tokens
-- <a href="#section1">Merging of the segments
 - <a href="#Logit-bias">Adding tokens to logit bias to influence chat completions
 - <a href="#More-resources">More resources
 
@@ -91,7 +89,7 @@ To see the tiktoken regex in action, you can try the below script which is a mod
 
 Run this script:
 
-    python3 tiktoken-educational.py
+    python3 tiktoken_educational.py
 
 The first step in BPE tokenization is to split the input string into individual tokens.  The regex used to split strings in tiktoken can be retrieved through the encoding object:
 
@@ -153,9 +151,13 @@ Here is a modified version of _educational.py that runs from the command line an
 
 Run this script:
 
-    python3 tiktoken-educational.py
+    python3 tiktoken_educational.py
 
-(Future to do:  Breakdown of creating vocabularies by inputting your own text from 'Training your own BPE' from _educational.py.)
+Enter a text string and watch the process by which the string is split and then merged back together into tokens.
+
+Next, choose the 'train' option.  This will train based on a text file with limited letters of a to h.  It will generate a new BPE dictionary.  Then it will take a sample string and split and merge it using the new dictionary.
+
+In this example, the source text for building the BPE dictionary is a ChatGPT-generated essay composed of only letters from 'a' to 'h'.  This means the BPE encoder will not be able to merge characters that come after 'h' in the alphabet.
 
 ### Special tokens
 
