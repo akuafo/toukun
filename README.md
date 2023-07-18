@@ -2,18 +2,15 @@
 
 This is a work-in-progress walkthrough of the OpenAI tiktoken package including Python examples of text tokenization, viewing the internal dictionary, multi-byte unicode, logit bias, and more.  The scripts in this repository were created for learning and experimentation.
 
-Follow these steps to clone this project and install a copy of tiktoken as a submodule.
-- Clone the project: git clone https://github.com/akuafo/toukun.git
+Follow these steps to get started:
+- Install tiktoken:  pip install tiktoken
+- Clone this project: git clone https://github.com/akuafo/toukun.git
 - Navigate into the directory: cd toukun
-- Initialize and update submodules: git submodule update --init --recursive
-- Navigate into the tiktoken directory: cd tiktoken
-- Install tiktoken: pip install .
-- Navigate back to main directory: cd ..
 - Add your OpenAI developer key as an environment variable (Linux/Mac, export OPENAI_KEY=your_key.  Windows, set OPENAI_KEY=your_key)
+- Now, you can run the scripts described below
 
 Table of contents:
 - <a href="#Background">Brief background on tokenization
-- <a href="#OpenAI-models">Choosing the OpenAI models for tokenization
 - <a href="#Dicionary-files">Save the internal tiktoken dictionary as bytes and utf-8
 - <a href="#Text-to-token">Tiktoken's core text encoding and decoding functions
 - <a href="#Tiktoken-regex">The Tiktoken regex for initial splitting of text
@@ -33,16 +30,8 @@ Knowing how many tokens are in a text string can tell you (a) whether the string
 
 Some real world use cases for Tiktoken  include counting the number of tokens that can fit within the chat context window, estimating OpenAI license costs which are per token, customizing the logit bias to influence chat completions, and passing tokens as input to the embeddings API.
 
-## <a id="OpenAI-models"></a>Tiktoken support for OpenAI models
-
-Note:  Throughout these exercises, we'll set the tiktoken model as 'cl100k_base model' since that is the most recent model and is used for GPT-4.  While there are variations in how tiktoken performs tokenization with the different models, the basic concepts are the same.
-
-In tiktoken, you set the model when you instantiate an encoding object:
-
-    encoding = tiktoken.get_encoding("cl100k_base")  # Using the cl100k_base model.
-
-The list of models are stored in the model.py file in tiktoken:
-    tiktoken/tiktoken/model.py
+Note:  Throughout these exercises, we'll set the tiktoken model as 'cl100k_base model' since that is the most recent model and is used for GPT-4.  While there are variations in how tiktoken performs tokenization with the different models, the basic concepts are the same.  In tiktoken, you set the model when you instantiate an encoding object:  encoding = tiktoken.get_encoding("cl100k_base").  The list of models are stored in the model.py file in tiktoken:
+tiktoken/tiktoken/model.py
 
 ## <a id="Dictionary-files"></a>View tiktoken dictionary as bytes and utf-8 strings
 
@@ -124,7 +113,7 @@ Counting tokens is the most common use case for using Tiktoken.  It's used to en
 
 Run this script:
 
-    counttokens.py
+    python3 counttokens.py
 
 This is an expanded version of the example in the openai cookbook.  This script prints out more detail about the text being passed back and forth in the chat conversation and calculates the tokens based on that.
 

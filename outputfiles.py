@@ -51,27 +51,3 @@ with open('referencefiles/cl100k_base.tiktoken', 'r') as infile, \
         decoded_string = decoded_bytes.decode('utf-8', errors='replace')  
         outfile_utf8.write(f"{number} {decoded_string}\n")  # Write the UTF-8 string to the second output file
 print(write_tiktoken_byteliteral_utf8string.__doc__); time.sleep(1)
-
-#def write_tiktoken_regex():
-    """
-    # File:  pat_str.txt
-    
-    This is the regex that splits the input string into individual tokens, the first step in BPE tokenization.
-    This is pretty complex because it has to handle any type of text in any language including meaningless and machine generated text.
-    The regex logic includes contractions like don't and I'm
-    Unicode letter characters which may be preceded by non-letter, non-number characters
-    Number characters
-    Newline or carriage return characters
-    Spaces of varying lengths
-    """
-# with open("referencefiles/pat_str.txt", "w") as f:  # save tiktoken regex pattern string
-#     f.write(encoding._pat_str)
-# print(write_tiktoken_regex.__doc__); time.sleep(1)
-# print("\nSaved file:  referencefiles/pat_str.txt\n"); time.sleep(3)
-
-#def write_tiktoken_regex_pattern():
-#The next file is an internal tiktoken file which is a dictionary of the mergeable token bytes and their ranks, which correspond to merge priority.
-#with open("referencefiles/mergeable_ranks.txt", "w") as f:  # save tiktoken mergable ranks file
-#    f.write(str(encoding._mergeable_ranks))
-#print(write_tiktoken_regex_pattern.__doc__); time.sleep(1)
-#print("\nmergeable_ranks.txt has been written successfully.\n"); time.sleep(3)
