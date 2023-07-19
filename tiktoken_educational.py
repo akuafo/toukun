@@ -214,8 +214,8 @@ def bpe_train(
                 print("Now the first twenty words in our training data look like:")
                 for word in words[:20]:
                     print(word)
-            print("\n")
-        print("Finished BPE dictionary training.\n")
+            # print("\n")
+        # print("Finished BPE dictionary training.\n")
 
     return ranks
 
@@ -234,9 +234,13 @@ def train_simple_encoding():
         r"""'s|'t|'re|'ve|'m|'ll|'d| ?[\p{L}]+| ?[\p{N}]+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+"""
     )
 
-    with open("bpesample_abcdefgh.txt", "r") as f:  # put any sample text here to use as source of training data
-        # with open("bpesampletrainingdata.txt", "r") as f:  # put any sample text here to use as source of training data
-        # with open(__file__, "r") as f: ## original _educational.py
+    print("This is the training data we will use to train our BPE dictionary:\n"
+          "bpesampletrainingdata.txt \n"
+          "The training data is a text  file containing words with only the letters a, b, c, d, e, f, g, h. \n
+          "This will skew the resulting encoding capability in an interesting way. \n")
+
+    with open("bpesampletrainingdata.txt", "r") as f:  # put any sample text here to use as source of training data
+        # with open(__file__, "r") as f: ## original _educational.py #uses this python script file as source of training data
         data = f.read()
 
     enc = SimpleBytePairEncoding.train(data, vocab_size=300, pat_str=gpt2_pattern)
