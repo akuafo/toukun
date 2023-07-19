@@ -2,12 +2,11 @@
 
 This is a work-in-progress walkthrough of the OpenAI tiktoken package including Python examples of text tokenization, viewing the internal dictionary, multi-byte unicode, logit bias, and more.  The scripts in this repository were created for learning and experimentation.
 
-Follow these steps to get started:
-- Install tiktoken:  pip install tiktoken
+To get started, follow these steps from the terminal command line:
 - Clone this project: git clone https://github.com/akuafo/toukun.git
 - Navigate into the directory: cd toukun
-- Add your OpenAI developer key as an environment variable (Linux/Mac, export OPENAI_KEY=your_key.  Windows, set OPENAI_KEY=your_key)
-- Now, you can run the scripts described below
+- Install the OpenAI Python package tiktoken:  pip install tiktoken
+- Open the terminal and run the scripts listed below
 
 Table of contents:
 - <a href="#Background">Brief background on tokenization
@@ -39,7 +38,7 @@ This python script will write out several files in different formats to help to 
 
 The files are saved to the directory 'referencefiles'.
 
-Run this script.
+From the terminal, run this script.
 
     python3 outputfiles.py
 
@@ -70,7 +69,7 @@ This script will output the following files:
 
 ### Converting from text to token, from token to text
 
-Run this script.
+Run this script:
 
     python3 encodedecode.py
 
@@ -110,6 +109,16 @@ The string is split into individual segments and then progressively merged into 
 ### Convert text to tokens and count them
 
 Counting tokens is the most common use case for using Tiktoken.  It's used to ensure that input will fit within the context window and also to estimate OpenAI costs which are priced per token.
+
+Install the OpenAI Python package 'openai' to use the OpenAI API:
+
+    pip install openai
+
+You'll need to setup an OpenAI developer account.  Then, add your developer key as an environment variable.
+Linux/Mac:  
+    export OPENAI_KEY=your_key
+Windows:  
+    set OPENAI_KEY=your_key)
 
 Run this script:
 

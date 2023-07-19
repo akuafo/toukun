@@ -2,7 +2,6 @@
 
 import tiktoken
 import time
-import openai
 import regex
 
 encoding = tiktoken.get_encoding("cl100k_base")  # Using the cl100k_base model.
