@@ -9,100 +9,54 @@ To get started, follow these steps from the terminal command line:
 - Open the terminal and run the scripts listed below
 
 Table of contents:
-- <a href="#Background">Brief background on tokenization
-- <a href="#Dicionary-files">Save the internal tiktoken dictionary as bytes and utf-8
-- <a href="#Text-to-token">Tiktoken's core text encoding and decoding functions
-- <a href="#Tiktoken-regex">The Tiktoken regex for initial splitting of text
+- <a href="#Background">Tokenization and Tiktoken
+- <a href="#Text-to-token">Tiktoken text to token (encode/decode)
+- <a href="#Train-BPE">Train a new BPE (modified Tiktoken _educational.py)
 - <a href="#Counting-tokens">Tiktoken for counting tokens
 - <a href="#Logit-bias">Adding tokens to logit bias to influence chat completions
-- <a href="#More-resources">More resources
+- <a href="#Dictionary-files">Save the internal tiktoken dictionary as bytes and utf-8
+- <a href="#Special-tokens">Special tokens
+- <a href="#Tiktoken-regex">The Tiktoken regex for initial splitting of text
 
 ![Screenshot of command line](https://github.com/akuafo/toukun/blob/main/commandline.jpg)
 
-## <a id="Background"></a>Background
+## <a id="Background"></a>Tokenization and Tiktoken
 
 This is an educational walkthrough of OpenAI's Tiktoken, a Python library developed by OpenAI to convert text to tokens for their API.
 
 In a general sense, tokenization involves breaking down text into small numerical 'tokens' that machine learning models to process. These tokens might represent individual characters or they could be words or phrases.  Tiktoken uses a type of tokenization known as Byte Pair Encoding (BPE) which starts with a base vocabulary of individual characters and iteratively merges the most common pair of consecutive characters to form new tokens.
 
-Knowing how many tokens are in a text string can tell you (a) whether the string is too long for a text model to process and (b) how much an OpenAI API call costs (as usage is priced by token).
+Knowing how many tokens are in a text string can tell you (a) whether the string is too long for a text model to process and (b) how much an OpenAI API call costs (as usage is priced by token).  It also lets you customize the logit bias to influence chat completions.
 
-Some real world use cases for Tiktoken  include counting the number of tokens that can fit within the chat context window, estimating OpenAI license costs which are per token, customizing the logit bias to influence chat completions, and passing tokens as input to the embeddings API.
-
-Note:  Throughout these exercises, we'll set the tiktoken model as 'cl100k_base model' since that is the most recent model and is used for GPT-4.  While there are variations in how tiktoken performs tokenization with the different models, the basic concepts are the same.  In tiktoken, you set the model when you instantiate an encoding object:  encoding = tiktoken.get_encoding("cl100k_base").  The list of models are stored in the model.py file in tiktoken:
-tiktoken/tiktoken/model.py
-
-## <a id="Dictionary-files"></a>View tiktoken dictionary as bytes and utf-8 strings
-
-This python script will write out several files in different formats to help to understand the tiktoken dictionary, encoding, and parsing.
-
-The files are saved to the directory 'referencefiles'.
-
-From the terminal, run this script.
-
-    python3 outputfiles.py
-
-This script will output the following files:
-
-    # File:  
-      referencefiles/cl100k_base.tiktoken
-
-    This file consists of the dictionary of base64 encoded tokens and their index numbers.
-    The source file is at this URL:  https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken
-
-    # Files:
-      referencefiles/cl100k_base_byteliterals.txt
-      referencefiles/cl100k_base_utf8.txt
-    
-    This step will convert the text-related values in the cl100k_base file and output two additional files.
-
-    For the first output file, we'll be decoding the bash64 values which will result in byte literals.  
-    For example, the letter A becomes the string literal b'A'.
-
-    For the second output file, we'll decode the base64 values into UTF-8 strings so that we can see double-byte characters.
-        For example, character 22656 is the byte literal b'\xe6\x9c\xac' which corresponds to the Japanese kanji 本.
-        Sometimes the bytes are not valid UTF-8 so it substitutes the default 'replace' unicode character.
-        Sometimes there will be formatting characters like carriage returns that will display weirdness in a text editor.
-        cl100k_base_byteliterals.txt and cl100k_base_utf8.txt have been written successfully.
+For these samples, the tiktoken model is 'cl100k_base model' since that is the model used for GPT-4.  You set the model when you instantiate an encoding object:  encoding = tiktoken.get_encoding("cl100k_base").  The list of models are stored at tiktoken/tiktoken/model.py.
 
 ## <a id="Text-to-token"></a>Tiktoken's core text encoding and decoding functions
 
 ### Converting from text to token, from token to text
 
-Run this script:
+At the command line, run this script:
 
     python3 encodedecode.py
 
-This script will run an interactive session from the command line to convert tokens and text via Tiktoken.  It gives you two options:  enter a string of text and see the tokens, or enter a token and see the text.
+This script will run an interactive session from the command line to convert tokens and text via Tiktoken.  It gives you two options:  enter a string of text and see the tokens, or enter a token and see the text.  You can try multi-byte unicode characters too.
 
-## <a id="Tiktoken-regex"></a>The Tiktoken regex for initial splitting of text
+## <a id="Train-BPE"></a>Train a new BPE
 
-### Regex
+### Tiktoken _educational.py
 
-To see the tiktoken regex in action, you can try the below script which is a modified version of tiktoken's own _educational.py script.
+Here is a modified version of _educational.py that runs from the command line and prints out more detail.  Tiktoken's own _educational.py is very helpful for understanding concepts, but I found it fairly difficult to understand the first time through.  Thus this script breaks down the steps a little more.
 
 Run this script:
 
     python3 tiktoken_educational.py
 
-The first step in BPE tokenization is to split the input string into individual tokens.  The regex used to split strings in tiktoken can be retrieved through the encoding object:
+Enter a text string and watch the process by which the string is split and then merged back together into tokens.
 
-encoding._pat_str
+Next, choose the 'train' option.  This will train based on a text file with limited letters of a to h.  It will generate a new BPE dictionary.  Then it will take a sample string and split and merge it using the new dictionary.
 
-The actual regex string is the following:
+In this example, the source text for building the BPE dictionary is a ChatGPT-generated essay composed of only letters from 'a' to 'h'.  This means the BPE encoder will not be able to merge characters that come after 'h' in the alphabet.
 
-    (?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+
-
-It's pretty complex because it has to handle any type of text in any language including meaningless and machine generated text.
-
-The regex logic handles the following (and more):
-- contractions like don't and I'm
-- Unicode letter characters which may be preceded by non-letter, non-number characters
-- Number characters
-- Newline or carriage return characters
-- Spaces of varying lengths
-
-The string is split into individual segments and then progressively merged into larger segments based on which tokens have the higher rank.
+Now, try entering the same text string again, and observe that it can't do merges for the letters that aren't in the dictionary.
 
 ## <a id="Counting-tokens"></a>Tiktoken for counting tokens
 
@@ -147,21 +101,40 @@ More on logit bias from these resources:
 - https://twitter.com/QVagabond/status/1669759115252445191
 - https://colab.research.google.com/drive/1fx0NeWHE7S97gdvadR-WC0z36R2Z_mu9
 
-## <a id="More-resources"></a>More resources
+## <a id="Dictionary-files"></a>View tiktoken dictionary as bytes and utf-8 strings
 
-### Tiktoken _educational.py
+This python script will write out several files in different formats to help to understand the tiktoken dictionary, encoding, and parsing.
 
-Here is a modified version of _educational.py that runs from the command line and prints out more detail.  Tiktoken's own _educational.py is very helpful for understanding concepts, but I found it fairly difficult to understand the first time through.  Thus this script breaks down the steps a little more.
+The files are saved to the directory 'referencefiles'.
 
-Run this script:
+From the terminal, run this script.
 
-    python3 tiktoken_educational.py
+    python3 outputfiles.py
 
-Enter a text string and watch the process by which the string is split and then merged back together into tokens.
+This script will output the following files:
 
-Next, choose the 'train' option.  This will train based on a text file with limited letters of a to h.  It will generate a new BPE dictionary.  Then it will take a sample string and split and merge it using the new dictionary.
+    # File:  
+      referencefiles/cl100k_base.tiktoken
 
-In this example, the source text for building the BPE dictionary is a ChatGPT-generated essay composed of only letters from 'a' to 'h'.  This means the BPE encoder will not be able to merge characters that come after 'h' in the alphabet.
+    This file consists of the dictionary of base64 encoded tokens and their index numbers.
+    The source file is at this URL:  https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken
+
+    # Files:
+      referencefiles/cl100k_base_byteliterals.txt
+      referencefiles/cl100k_base_utf8.txt
+    
+    This step will convert the text-related values in the cl100k_base file and output two additional files.
+
+    For the first output file, we'll be decoding the bash64 values which will result in byte literals.  
+    For example, the letter A becomes the string literal b'A'.
+
+    For the second output file, we'll decode the base64 values into UTF-8 strings so that we can see double-byte characters.
+        For example, character 22656 is the byte literal b'\xe6\x9c\xac' which corresponds to the Japanese kanji 本.
+        Sometimes the bytes are not valid UTF-8 so it substitutes the default 'replace' unicode character.
+        Sometimes there will be formatting characters like carriage returns that will display weirdness in a text editor.
+        cl100k_base_byteliterals.txt and cl100k_base_utf8.txt have been written successfully.
+
+## <a id="Special-tokens"></a>Special tokens
 
 ### Special tokens
 
@@ -208,5 +181,26 @@ Array of json objects ('messages')
 json objects:  two key/value pairs
 key/value pairs:  role, content
 
-### Non-English languages, non-human languages, and random high priority word fragments in Tiktoken
+## <a id="Tiktoken-regex"></a>The Tiktoken regex for initial splitting of text
 
+### Regex
+The first step in BPE tokenization is to split the input string into individual tokens.  The regex used to split strings in tiktoken can be retrieved through the encoding object:
+
+encoding._pat_str
+
+The actual regex string is the following:
+
+    (?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+
+
+It's pretty complex because it has to handle any type of text in any language including meaningless and machine generated text.
+
+The regex logic handles the following (and more):
+- contractions like don't and I'm
+- Unicode letter characters which may be preceded by non-letter, non-number characters
+- Number characters
+- Newline or carriage return characters
+- Spaces of varying lengths
+
+The string is split into individual segments and then progressively merged into larger segments based on which tokens have the higher rank.
+
+To observe more about how the tiktoken regex works, you can run _educational.py script.

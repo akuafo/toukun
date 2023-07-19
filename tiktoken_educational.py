@@ -161,7 +161,9 @@ def bpe_train(
         [bytes([b]) for b in word.encode("utf-8")] for word in regex.findall(pat_str, data)
     ]
 
-    print("The screen output will be printed to:  referencefiles/bpetrainingoutput.txt")
+    print("Training completed.  The BPT training steps are saved at:  referencefiles/bpetrainingoutput.txt")
+    print('')
+
     output_file = open("referencefiles/bpetrainingoutput.txt", "w") # Create output file to save the printed output to a file
 
     # Now, use our data to figure out which merges we should make
@@ -234,12 +236,9 @@ def train_simple_encoding():
         r"""'s|'t|'re|'ve|'m|'ll|'d| ?[\p{L}]+| ?[\p{N}]+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+"""
     )
 
-    print("This is the training data we will use to train our BPE dictionary:\n"
-          "bpesampletrainingdata.txt \n"
-          "The training data is a text  file containing words with only the letters a, b, c, d, e, f, g, h. \n
-          "This will skew the resulting encoding capability in an interesting way. \n")
+    print("This is the training data we will use to train our BPE dictionary:  bpesample.txt.  It's a text  file containing words with only the letters a, b, c, d, e, f, g, h.  After it finishes training, you can test it by encoding a string. \n")
 
-    with open("bpesampletrainingdata.txt", "r") as f:  # put any sample text here to use as source of training data
+    with open("bpesample.txt", "r") as f:  # put any sample text here to use as source of training data
         # with open(__file__, "r") as f: ## original _educational.py #uses this python script file as source of training data
         data = f.read()
 
