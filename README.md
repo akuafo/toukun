@@ -5,7 +5,7 @@ This is a work-in-progress walkthrough of the OpenAI tiktoken package including 
 To get started, follow these steps from the terminal command line:
 - Clone this project: git clone https://github.com/akuafo/toukun.git
 - Navigate into the directory: cd toukun
-- Install the OpenAI Python package tiktoken:  pip install tiktoken
+- Install the tiktoken package from OpenAI:  pip install tiktoken
 - Open the terminal and run the scripts listed below
 
 Table of contents:
@@ -39,6 +39,37 @@ At the command line, run this script:
     python3 encodedecode.py
 
 This script will run an interactive session from the command line to convert tokens and text via Tiktoken.  It gives you two options:  enter a string of text and see the tokens, or enter a token and see the text.  You can try multi-byte unicode characters too.
+
+For example, here is a sample session:
+
+    Please enter a command: 
+    ('s' to input string, 't' to input token', or 'q' to quit) 
+    s
+    Enter a string to encode: ok
+    Titoken results:
+    array of tokens of length 1
+        token as integer: 564 | token as string: ok | token as byte literal: b'ok'
+
+    Please enter a command: 
+    ('s' to input string, 't' to input token', or 'q' to quit) 
+    s
+    Enter a string to encode: okok
+    Titoken results:
+    array of tokens of length 2
+        token as integer: 564 | token as string: ok | token as byte literal: b'ok'
+        token as integer: 564 | token as string: ok | token as byte literal: b'ok'
+
+    Please enter a command: 
+    ('s' to input string, 't' to input token', or 'q' to quit) 
+    t
+    Enter a token to decode (integer: 100
+    Titoken results:
+    array value: [100] | decode to string: � | decode to byte literal: b'\xa7'
+
+    Please enter a command: 
+    ('s' to input string, 't' to input token', or 'q' to quit) 
+    q
+
 
 ## <a id="Train-BPE"></a>Train a new BPE
 
