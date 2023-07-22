@@ -30,7 +30,7 @@ commands = {
 }
 
 while True:
-    user_input = input("Please enter a command ('s' to input string, 't' to input token', or 'q' to quit): \n")
+    user_input = input("Please enter a command: \n  ('s' to input string, 't' to input token', or 'q' to quit) \n")
     if user_input.lower() in ['quit', 'q']:
         break
     elif user_input.lower() in commands:
