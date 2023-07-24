@@ -257,16 +257,21 @@ def train_simple_encoding():
 
 ## Added command line interface...
 while True:
+    print("This session will show you the before and after of a byte pair training process.\n")
+    print("First, enter a text string, and observe the process by which your string is merged into tokens with the regular tiktoken dictionary.")
+    print("Next, choose the 'train' option.  This will train a new BPE dictionary based on a text file with limited letters of a to h.")
+    print("Finally, enter your sample string again, and observe the merging process with this new BPE dictionary.")
+    print("")
     user_input = input("Please enter a string (or 'train' to train, 'q' to quit): \n")
     if user_input.lower() in ['quit', 'q']:
         print("Goodbye!")
         break
     if user_input.lower() in ['train', 't']:
         # Train a new encoder
-        print("  In this example, we're using an essay composed of only letters from a to h as our source text.  This means the BPE encoder will not be able to merge characters that come after h in the alphabet.\n"); 
-        print("Training a new encoder...")
-        print("  The first step is using BPE training to create a dictionary called mergeable_ranks"); time.sleep(1) # print steps
-        print("  The next step is using that new dictionary to encode a string\n"); time.sleep(1) # print steps
+        print("  In this example, we're using an essay composed of only letters from a to h as our source text.  This means the BPE encoder will not be able to merge characters that come after h in the alphabet.\n");time.sleep(2)
+        print("Training a new encoder...");time.sleep(2)
+        print("  This will use BPE training to create a new dictionary"); time.sleep(1) # print steps
+        print("  \nThe next step is using that new dictionary to encode a string\n"); time.sleep(1) # print steps
         enc = train_simple_encoding()
         #    def train(training_data: str, vocab_size: int, pat_str: str):
 
