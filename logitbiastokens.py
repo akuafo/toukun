@@ -46,24 +46,25 @@ In other words, the amplification property of the softmax function helps in prod
 
 """
 
-print("\nIn this exercise, we will create a list of logitbias parameters to force the OpenAI API to respond with a specific output.");time.sleep(1)
+print("\nIn this exercise, we will create a list of logitbias parameters with value 100 to force the OpenAI API to respond with a specific output.");time.sleep(1)
 print("For a simple example, try 'true' and false' along with the test queries of 'does 2 + 2 = 4' and 'does 2 + 2 = 5'");time.sleep(1)
 print("The challenge is encapsulating your intended logic in a single 'word' that's in the tiktoken dictionary.");time.sleep(1)
 print("After you enter a word for logit bias, and we will try to encode it as a token.\n");time.sleep(1)
 while True:
-    bias_input = input("Enter intended logitbias parameter (type 'done' when finished): \n")
+    bias_input = input("\nEnter your logitbias parameters (e.g. 'true' and 'false'), one at a time.  When you have entered them all, type 'done'. \n")
     if bias_input.lower() == 'done':
+        print("\nYour logitbias tokens are:  " + str(logitbias) + "\n")
         break
     else:
         try:
             ## use tiktoken to get the token value
             token = encoding.encode(bias_input)[0]
-            print("Tiktoken byte string:  " + str(encoding.decode_bytes([token])) + " | UTF-8 decoded:  " + encoding.decode_bytes([token]).decode('utf-8', errors='replace'))
-            use_token = input("Tokenized.  Do you want to use it ('y', 'n')?  ")
+            print("  Tiktoken byte string:  " + str(encoding.decode_bytes([token])) + " | UTF-8 decoded:  " + encoding.decode_bytes([token]).decode('utf-8', errors='replace'))
+            use_token = input("  Confirm if this parameter is correct ('y', 'n')?  \n")
             if use_token.lower() == 'y':
                 logitbias[token] = 100
         except ValueError:
-            print("Invalid input.")
+            print("  Invalid input.")
 
 print("\nlogitbias tokens:")
 print(str(logitbias) + "\n")
