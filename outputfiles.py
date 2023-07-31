@@ -5,26 +5,32 @@ import tiktoken
 import urllib.request
 import base64
 import time
+import os
 
 encoding = tiktoken.get_encoding("cl100k_base")  # Using the cl100k_base model.
 
 def set_tiktoken_encoding():
     """
     We'll set the tiktoken model as 'cl100k_base model' since that model is used for GPT-4.
-    """
-print(set_tiktoken_encoding.__doc__); time.sleep(1)
-
-def write_tiktoken_dictionary():
-    """
+    
     # File:  cl100k_base.tiktoken
     
     It includes the dictionary of base64 encoded tokens and their index numbers.
+
     The source file is at this URL:  https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken
     """
-    url = "https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken"  
-    urllib.request.urlretrieve(url, "referencefiles/cl100k_base.tiktoken")
-print(write_tiktoken_dictionary.__doc__); time.sleep(1)
-print("\nSaved file:  referencefiles/cl100k_base.tiktoken\n")
+
+    
+print(set_tiktoken_encoding.__doc__); time.sleep(1)
+
+url = "https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken"
+file_path = "referencefiles/cl100k_base.tiktoken"
+
+try:
+    local_file, headers = urllib.request.urlretrieve(url, file_path)
+    print("\nList of files saved in " , os.getcwd() ,"...\n", os.listdir("referencefiles"), "\n")
+except Exception as e:
+    print(f"An error occurred: {e}")
 
 def write_tiktoken_byteliteral_utf8string(): 
     """
@@ -51,3 +57,4 @@ with open('referencefiles/cl100k_base.tiktoken', 'r') as infile, \
         decoded_string = decoded_bytes.decode('utf-8', errors='replace')  
         outfile_utf8.write(f"{number} {decoded_string}\n")  # Write the UTF-8 string to the second output file
 print(write_tiktoken_byteliteral_utf8string.__doc__); time.sleep(1)
+print("\nList of files saved in " , os.getcwd() ,"...\n", os.listdir("referencefiles"), "\n")
