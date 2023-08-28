@@ -24,7 +24,7 @@ Table of contents:
 
 This is an educational walkthrough of OpenAI's Tiktoken, a Python library developed by OpenAI that converts text to tokens.
 
-Tokenization involves breaking down text into small numerical 'tokens' that machine learning models can process. These tokens might represent individual characters or they could be words or phrases.  Tiktoken uses a type of tokenization known as Byte Pair Encoding (BPE) which starts with a base vocabulary of individual characters and iteratively merges the most common pair of consecutive characters to form new tokens.
+Tokenization involves breaking down text into small numerical tokens that machine learning models can process. These tokens might represent individual characters or they could be words or phrases.  Tiktoken uses a type of tokenization known as Byte Pair Encoding (BPE) which starts with a base vocabulary of individual characters and iteratively merges the most common pair of consecutive characters to form new tokens.
 
 Knowing how many tokens are in a text string can tell you (a) whether the string is too long for a text model to process and (b) how much an OpenAI API call costs (as usage is priced by token).  It also lets you customize the logit bias to influence chat completions.
 
